@@ -1,0 +1,41 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Tue Mar 24 15:05:40 2020
+
+@author: 24359
+"""
+from PIL import Image
+import matplotlib.pyplot as plt
+plt.rcParams["font.sans-serif"]="Simhei"
+plt.rcParams["axes.unicode_minus"]=False
+img=Image.open("lena.tiff")
+img_r,img_g,img_b=img.split()
+plt.figure(figsize=(10,10))
+plt.suptitle("图像基本操作",fontsize=20,color="B")
+
+plt.subplot(221)
+plt.axis("off")
+img_R=img_r.resize((50,50))
+plt.imshow(img_R,cmap="gray")
+plt.title("R-缩放",fontsize=14)
+
+plt.subplot(222)
+img_flr=img_g.transpose(Image.FLIP_LEFT_RIGHT)
+img_r90=img_flr.transpose(Image.ROTATE_90)
+plt.imshow(img_r90,cmap="gray")
+plt.title("G-镜像+旋转",fontsize=14)
+
+plt.subplot(223)
+plt.axis("off")
+img_region=img_b.crop((0,0,300,300))
+plt.imshow(img_region,cmap="gray")
+plt.title("B-裁剪",fontsize=14)
+
+plt.subplot(224)
+plt.axis("off")
+img_rgb=Image.merge("RGB",[img_r,img_g,img_b])
+plt.imshow(img_rgb)
+plt.title("显示图像的色彩模式",fontsize=14)
+img_rgb.save("test.png")
+
+plt.show()
